@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+
+    <title>Document</title>
+</head>
+
+
+<style>
+    .pass_show {
+        position: relative
+    }
+
+    .pass_show .ptxt {
+
+        position: absolute;
+
+        top: 50%;
+
+        right: 10px;
+
+        z-index: 1;
+
+        color: #f36c01;
+
+        margin-top: -10px;
+
+        cursor: pointer;
+
+        transition: .3s ease all;
+        font-family: "Font Awesome 5 Free";
+
+    }
+
+    .pass_show .ptxt:hover {
+        color: #333333;
+    }
+    /*barra progressiva*/
+
+
+
+
+.progress-bar_wrap {
+  width: 300px;
+  height: 5px;
+  background: #F6F6FA;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+
+
+.form-1 .progress-bar_item {
+  display: block;
+  height: 100%;
+  width: 33.33%;
+  visibility: hidden;
+  transition: background-color .2s, visibility .1s;
+  float: left;
+}
+
+.form-1 .active {
+  visibility: visible;
+}
+
+
+.progress-bar_text {
+  display: inline-block;
+  color: #aaa;
+  margin-left: 5px;
+  transition: .2s;
+}
+
+
+    
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                <form class="form-1">
+                <label class="col-form-label">Senha</label>
+                <div class="form-group pass_show">
+                    <input type="password" class="input-1 form-control" placeholder="Senha"  id="password"    required autofocus>
+                </div>
+                <div class="progress-bar_wrap">
+                    <div class="progress-bar_item progress-bar_item-1"></div>
+                    <div class="progress-bar_item progress-bar_item-2"></div>
+                    <div class="progress-bar_item progress-bar_item-3"></div>
+                </div>
+                <span class="progress-bar_text">Password is blank</span>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('.pass_show').append('<span class="ptxt"></span>');
+        });
+
+
+        $(document).on('click', '.pass_show .ptxt', function () {
+
+            $(this).text($(this).text() == "" ? "" : "");
+
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+
+        });
+
+         $(document).ready(function () {
+
+                const changeText = function (el, text, color) {
+                    el.text(text).css('color', color);
+                };
+
+                $('.input-1').keyup(function () {
+                    let len = this.value.length;
+                    const pbText = $('.form-1 .progress-bar_text');
+
+                    if (len === 0) {
+                        $('.form-1 .progress-bar_item').each(function () {
+                            $(this).removeClass('active')
+                        });
+                        $('.form-1 .active').css('background-color', 'transparent');
+                        changeText(pbText, 'Password is blank');
+                    } else if (len > 0 && len <= 4) {
+                        $('.form-1 .progress-bar_item-1').addClass('active');
+                        $('.form-1 .progress-bar_item-2').removeClass('active');
+                        $('.form-1 .progress-bar_item-3').removeClass('active');
+                        $('.form-1 .active').css('background-color', '#FF4B47');
+                        changeText(pbText, 'Too weak');
+                    } else if (len > 4 && len <= 8) {
+                        $('.form-1 .progress-bar_item-2').addClass('active');
+                        $('.form-1 .progress-bar_item-3').removeClass('active');
+                        $('.form-1 .active').css('background-color', '#F9AE35');
+                        changeText(pbText, 'Could be stronger');
+                    } else {
+                        $('.form-1 .progress-bar_item').each(function () {
+                            $(this).addClass('active');
+                        });
+                        $('.form-1 .active').css('background-color', '#2DAF7D');
+                        changeText(pbText, 'Strong password');
+                    }
+                });
+            });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

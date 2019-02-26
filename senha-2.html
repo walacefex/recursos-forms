@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+
+
+
+.form-container {
+  display: block;
+  width: 500px;
+  margin: 60px auto;
+  text-align: left;
+}
+
+
+input[type='password'] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 55px;
+  display: inline-block;
+  border: 3px solid #2F96EF;
+  border-radius: 5px;
+  padding: 0 15px;
+  margin: 10px 0;
+  transition: .2s;
+}
+
+.progress-bar_wrap {
+  width: 300px;
+  height: 5px;
+  background: #F6F6FA;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+
+
+.form-1 .progress-bar_item {
+  display: inline-block;
+  height: 100%;
+  width: 33.33%;
+  visibility: hidden;
+  transition: background-color .2s, visisility .1s;
+  float: left;
+}
+
+.form-1 .active {
+  visibility: visible;
+}
+
+
+.progress-bar_text {
+  display: inline-block;
+  color: #aaa;
+  margin-left: 5px;
+  transition: .2s;
+}
+
+
+
+
+</style>
+
+
+<body>
+    <div class="form-container">
+        <form class="form-1" action="">
+            <lable>Enter password
+                <input class="input-1" type="password" id="password" placeholder="SENHA" >
+            </lable>
+            <div class="progress-bar_wrap">
+                <div class="progress-bar_item progress-bar_item-1"></div>
+                <div class="progress-bar_item progress-bar_item-2"></div>
+                <div class="progress-bar_item progress-bar_item-3"></div>
+            </div>
+            <span class="progress-bar_text">Password is blank</span>
+        </form>
+    </div>
+    
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function () {
+
+        const changeText = function (el, text, color) {
+            el.text(text).css('color', color);
+        };
+
+        $('.input-1').keyup(function () {
+            let len = this.value.length;
+            const pbText = $('.form-1 .progress-bar_text');
+
+            if (len === 0) {
+                $('.form-1 .progress-bar_item').each(function () {
+                    $(this).removeClass('active')
+                });
+                $('.form-1 .active').css('background-color', 'transparent');
+                changeText(pbText, 'Password is blank');
+            } else if (len > 0 && len <= 4) {
+                $('.form-1 .progress-bar_item-1').addClass('active');
+                $('.form-1 .progress-bar_item-2').removeClass('active');
+                $('.form-1 .progress-bar_item-3').removeClass('active');
+                $('.form-1 .active').css('background-color', '#FF4B47');
+                changeText(pbText, 'Too weak');
+            } else if (len > 4 && len <= 8) {
+                $('.form-1 .progress-bar_item-2').addClass('active');
+                $('.form-1 .progress-bar_item-3').removeClass('active');
+                $('.form-1 .active').css('background-color', '#F9AE35');
+                changeText(pbText, 'Could be stronger');
+            } else {
+                $('.form-1 .progress-bar_item').each(function () {
+                    $(this).addClass('active');
+                });
+                $('.form-1 .active').css('background-color', '#2DAF7D');
+                changeText(pbText, 'Strong password');
+            }
+        });
+    });
+
+     
+    
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
